@@ -1,0 +1,20 @@
+#location / {
+#   try_files $uri $uri/ /index.php?$query_string;
+#}
+#以上是Nginx的重写正则
+
+server {
+    listen 80;
+
+    server_name www.test.com;
+    root /data/wwwroot;
+
+    index index.php index.html index.htm index.nginx-debian.html;
+    location / {
+       try_files $uri $uri/ /index.php?$query_string;
+    }
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+    }
+}
